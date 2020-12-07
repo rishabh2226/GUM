@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b8805ee5bc2745b8915f91a5ddee25f5" Name="Diagram1">
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Category" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Invoice" Width="1.5" PointX="8.25" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Order" Width="1.5" PointX="6" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.PaymentDetail" Width="1.5" PointX="8.25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.PaymentMethod" Width="1.5" PointX="3.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Product" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.ProductImage" Width="1.5" PointX="7.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Role" Width="1.5" PointX="1.5" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Shipper" Width="1.5" PointX="3.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Size" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Stock" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.SubCategory" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.User" Width="1.5" PointX="3.75" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Address" Width="1.5" PointX="6" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.Cart" Width="1.5" PointX="7.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GetUniqueMerchandiseModel.OrderDetail" Width="1.5" PointX="10.5" PointY="9.5" IsExpanded="true" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Product_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_SubCategory_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Invoices_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_OrderDetails_Invoices" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Order_PaymentMethod" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Order_Shipper" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_OrderDetails_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_PaymentDetails_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_PaymentDetails_PaymentMethod" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Cart_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_OrderDetails_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Product_SubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_ProductImage_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Stock_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Stock_Size" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Address_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GetUniqueMerchandiseModel.FK_Cart_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
