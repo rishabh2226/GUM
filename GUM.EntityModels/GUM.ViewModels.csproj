@@ -51,5 +51,11 @@
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GUM.DataModels\GUM.DataModels.csproj">
+      <Project>{dddc2342-c102-4676-b840-9fd2120ed910}</Project>
+      <Name>GUM.DataModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

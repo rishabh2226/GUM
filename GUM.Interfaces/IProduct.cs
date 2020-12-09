@@ -14,5 +14,9 @@ namespace GUM.Interfaces
         Product GetByID(long productID);
         bool Delete(int productID);
         void Update(Product product);
+        List<ProductImage> GetImagesUsingProductID(long productID);
+        void AddImagesToProduct(Product product);
+        bool DeleteProductImage(int productImageID);
+        ProductImage GetProductImageByID(long productImageID);
     }
 }

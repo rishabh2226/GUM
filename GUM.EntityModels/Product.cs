@@ -8,11 +8,7 @@ namespace GUM.ViewModels
 {
     public class Product
     {
-        public Product()
-        {
-            this.ProductImages = new List<ProductImage>();
-            this.Stocks = new List<Stock>();
-        }
+
         public long ProductID { get; set; }
         public long SubcategoryID { get; set; }
         public string SubcategoryName { get; set; }
@@ -23,8 +19,8 @@ namespace GUM.ViewModels
         public decimal UnitPrice { get; set; }
         public string Color { get; set; }
         public decimal DiscountPercentage { get; set; }
-        public List<ProductImage> ProductImages { get; set; }
-        public List<Stock> Stocks { get; set; }
+        public List<GUM.DataModels.ProductImage> ProductImages { get; set; }
+        public List<GUM.DataModels.Stock> Stocks { get; set; }
         public string[] Images { get; set; }
 
         public int TotalQuantity { get; set; }

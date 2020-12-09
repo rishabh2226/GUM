@@ -8,6 +8,7 @@ using VM=GUM.ViewModels;
 using DM=GUM.DataModels;
 using System.Security.Cryptography;
 using GUM.Interfaces;
+using System.Data.Entity;
 
 namespace GUM.DAL
 {
@@ -55,88 +56,136 @@ namespace GUM.DAL
             dbContext.SaveChanges();
         }
 
+        public void AddImagesToProduct(VM.Product product)
+        {
+            foreach (var img in product.Images)
+            {
+                var productImage = new DM.ProductImage()
+                {
+                    ProductID = product.ProductID,
+                    Image = img
+                };
+                dbContext.ProductImages.Add(productImage);
+            }
+            dbContext.SaveChanges();
+        }
+
         public bool Delete(int productID)
         {
             throw new NotImplementedException();
         }
 
-        //public bool Delete(int subcategoryID)
-        //{
-        //    var subcategory = dbContext.SubCategories.Find(subcategoryID);
-        //    if (subcategory != null)
-        //    {
-        //        //found the subcategory with given id
-        //        dbContext.Entry(subcategory).State = EntityState.Deleted;
-        //        dbContext.SaveChanges();
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        //cannot find the subcategory with given id
-        //        return false;
-        //    }
-        //}
+        public bool DeleteProductImage(int productImageID)
+        {
+            var productImage = dbContext.ProductImages.Find(productImageID);
+            if (productImage != null)
+            {
+                //found the productImage with given id
+                dbContext.Entry(productImage).State = EntityState.Deleted;
+                dbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                //cannot find the productImage with given id
+                return false;
+            }
+        }
+
 
         public List<VM.Product> GetAll()
         {
-            List<VM.Product> products = null;
-            var prods = dbContext.Products.ToList<DM.Product>();
-            if (prods != null)
-            {
-                products = new List<VM.Product>();
-                products = (from pr in prods
-                                 select new VM.Product()
-                                 {
-                                     SubcategoryID = pr.SubCategoryID,
-                                     SubcategoryName = pr.SubCategory.SubCategoryName,
-                                     CategoryName = pr.Category.CategoryName,
-                                     CategoryID = pr.CategoryID,
-                                     ProductDescription = pr.ProductDescription,                                     
-                                     ProductName = pr.ProductName,
-                                     Color=pr.Color,
-                                     UnitPrice=pr.UnitPrice,
-                                     DiscountPercentage=pr.DiscountPercentage,
-                                     ProductID=pr.ProductID
-                                 }).ToList();
-                foreach (var p in products)
-                {
-                    var proImg = dbContext.ProductImages.Where(x => x.ProductID == p.ProductID).ToList();
-                    if (proImg != null)
+            List<VM.Product> products =  new List<VM.Product>();
+            products = (
+                    from p in dbContext.Products
+                    select new VM.Product()
                     {
-                        List<VM.ProductImage> productImage = new List<VM.ProductImage>();
-                        productImage = (
-                                         from pr in proImg                                         
-                                         select new VM.ProductImage() 
-                                            { 
-                                             Image= pr.Image,
-                                             ProductID=pr.ProductID,
-                                             ProductImageID=pr.ProductImageID
-                                         }).ToList();
-                        p.ProductImages = productImage;
-                    }
+                        SubcategoryID = p.SubCategoryID,
+                        SubcategoryName = p.SubCategory.SubCategoryName,
+                        CategoryName = p.Category.CategoryName,
+                        CategoryID = p.CategoryID,
+                        ProductDescription = p.ProductDescription,
+                        ProductName = p.ProductName,
+                        Color = p.Color,
+                        UnitPrice = p.UnitPrice,
+                        DiscountPercentage = p.DiscountPercentage,
+                        ProductID = p.ProductID,
+                        //ProductImages = p.ProductImages.ToList(),
+                        //Stocks = p.Stocks.ToList(),
+                    }).ToList();
 
-                    var stocks = dbContext.Stocks.Where(x => x.ProductID == p.ProductID).ToList();
-                    if (stocks != null) 
-                    {
-                        List<VM.Stock> stk = new List<VM.Stock>();
-                        stk = (
-                                from s in stocks
-                                select new VM.Stock()
-                                {
-                                    ProductID = s.ProductID,
-                                    SizeID = s.SizeID,
-                                    Quantity = s.Quantity
-                                }).ToList();
-                        p.Stocks = stk;
-                    }
-                }         
-            }
+            //var prods = dbContext.Products.ToList<DM.Product>();
+            //if (prods != null)
+            //{
+            //    products = new List<VM.Product>();
+            //    products = (from pr in prods
+            //                     select new VM.Product()
+            //                     {
+            //                         SubcategoryID = pr.SubCategoryID,
+            //                         SubcategoryName = pr.SubCategory.SubCategoryName,
+            //                         CategoryName = pr.Category.CategoryName,
+            //                         CategoryID = pr.CategoryID,
+            //                         ProductDescription = pr.ProductDescription,                                     
+            //                         ProductName = pr.ProductName,
+            //                         Color=pr.Color,
+            //                         UnitPrice=pr.UnitPrice,
+            //                         DiscountPercentage=pr.DiscountPercentage,
+            //                         ProductID=pr.ProductID
+            //                     }).ToList();
+            //    foreach (var p in products)
+            //    {
+            //        var proImg = dbContext.ProductImages.Where(x => x.ProductID == p.ProductID).ToList();
+            //        if (proImg != null)
+            //        {
+            //            List<VM.ProductImage> productImage = new List<VM.ProductImage>();
+            //            productImage = (
+            //                             from pr in proImg                                         
+            //                             select new VM.ProductImage() 
+            //                                { 
+            //                                 Image= pr.Image,
+            //                                 ProductID=pr.ProductID,
+            //                                 ProductImageID=pr.ProductImageID
+            //                             }).ToList();
+            //            p.ProductImages = productImage;
+            //        }
+
+            //        var stocks = dbContext.Stocks.Where(x => x.ProductID == p.ProductID).ToList();
+            //        if (stocks != null) 
+            //        {
+            //            List<VM.Stock> stk = new List<VM.Stock>();
+            //            stk = (
+            //                    from s in stocks
+            //                    select new VM.Stock()
+            //                    {
+            //                        ProductID = s.ProductID,
+            //                        SizeID = s.SizeID,
+            //                        Quantity = s.Quantity
+            //                    }).ToList();
+            //            p.Stocks = stk;
+            //        }
+            //    }         
+            //}
             return products;
         }
 
         public VM.Product GetByID(long productID)
         {
             throw new NotImplementedException();
+        }
+
+        public List<VM.ProductImage> GetImagesUsingProductID(long productID)
+        {
+            var images = dbContext.ProductImages.Where(x => x.ProductID == productID).Select(x => new VM.ProductImage() { Image=x.Image,ProductID=x.ProductID,ProductImageID=x.ProductImageID}).ToList();
+            if (images != null)
+                return images;
+            else
+                return null;
+        }
+
+        public VM.ProductImage GetProductImageByID(long productImageID)
+        {
+            var productImage = dbContext.ProductImages.Where(x => x.ProductImageID == productImageID).Select(x => new VM.ProductImage() { Image = x.Image,ProductID=x.ProductID,ProductImageID=x.ProductImageID}).FirstOrDefault();           
+            return productImage;
         }
 
         public void Update(VM.Product product)

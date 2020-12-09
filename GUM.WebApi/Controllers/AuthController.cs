@@ -42,8 +42,9 @@ namespace GUM.WebApi.Controllers
                     audience: "http://192.168.43.12:9000",
                     claims: new List<Claim>() 
                     {
-                        new Claim(ClaimTypes.Role,"Admin"),
-                        new Claim("Role","Admin")
+                        new Claim(ClaimTypes.Role,userDataFromDB.RoleName),
+                        new Claim("Role",userDataFromDB.RoleName),
+                        new Claim("Email",userDataFromDB.Email)
                     },
                     expires: DateTime.Now.AddDays(28),
                     signingCredentials: signinCredentials
@@ -55,6 +56,18 @@ namespace GUM.WebApi.Controllers
             //{
             //    return this.Request.CreateResponse(HttpStatusCode.Unauthorized);
             //}
+        }
+
+        [HttpPost]
+        [Route("api/Auth/Signup/")]
+
+        public HttpResponseMessage PostSignup(User user) 
+        {
+            var result = accountManager.Register(user);
+            if (result == true)
+                return Request.CreateResponse(HttpStatusCode.OK, new { Saved = "True" });
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new { Saved = "False" });
         }
     }
 }
