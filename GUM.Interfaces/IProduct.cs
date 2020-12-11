@@ -18,5 +18,8 @@ namespace GUM.Interfaces
         void AddImagesToProduct(Product product);
         bool DeleteProductImage(int productImageID);
         ProductImage GetProductImageByID(long productImageID);
+
+        List<Stock> GetStocks(long productID);
+        bool UpdateStock(Product stocks);
     }
 }

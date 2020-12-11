@@ -92,7 +92,6 @@ namespace GUM.DAL
             }
         }
 
-
         public List<VM.Product> GetAll()
         {
             List<VM.Product> products =  new List<VM.Product>();
@@ -188,9 +187,92 @@ namespace GUM.DAL
             return productImage;
         }
 
+        public List<VM.Stock> GetStocks(long productID)
+        {
+            var stocks = dbContext.Stocks.Where(x => x.ProductID == productID).Select(x => new VM.Stock()
+            {
+                Quantity = x.Quantity,
+                SizeID = x.SizeID,
+                ProductID = x.ProductID,
+                StockID=x.StockID,
+                Selected = true
+            }).ToList();
+            return stocks;
+        }
+
         public void Update(VM.Product product)
         {
             throw new NotImplementedException();
+        }
+
+        public bool UpdateStock(VM.Product product)
+        {
+            int row = 0;
+            var dbStocks = dbContext.Stocks.Where(x => x.ProductID == product.ProductID).ToList();
+            var sizeIDs = dbStocks.Select(x=>x.SizeID).ToArray();
+            var stockIDs = dbStocks.Select(x=>x.StockID).ToArray();
+            var stkIDs = product.Stocks.Select(x => x.StockID).ToArray();
+
+            foreach (var st in stockIDs)
+                {
+                    if (!stkIDs.Contains(st))
+                    {
+                        var d = dbContext.Stocks.Find(st);
+                        dbContext.Stocks.Remove(d);
+                        //dbContext.Entry(d).State = EntityState.Deleted;
+                        if (dbContext.SaveChanges() > 0)
+                        {
+                            row++;
+                        }
+                    }
+                }
+            foreach (var s in product.Stocks)
+                {
+
+                    if (s.StockID > 0)
+                    {
+                        var stk = dbContext.Stocks.Find(s.StockID);
+                        stk.Quantity = s.Quantity;
+                        if (dbContext.SaveChanges() > 0)
+                        {
+                            row++;
+                        }
+
+                    }
+                    else if (s.StockID == 0 && !sizeIDs.Contains(s.SizeID))
+                    {
+                        var stock = new DM.Stock()
+                        {
+                            SizeID = s.SizeID,
+                            ProductID = product.ProductID,
+                            Quantity = s.Quantity
+                        };
+                        dbContext.Stocks.Add(stock);
+                        if (dbContext.SaveChanges() > 0)
+                        {
+                            row++;
+                        }
+                    }
+                    else if (s.StockID == 0 && sizeIDs.Contains(s.SizeID))
+                    {
+                        var stk = dbContext.Stocks.Where(x => x.ProductID == product.ProductID && x.SizeID == s.SizeID).FirstOrDefault();
+                        stk.Quantity = s.Quantity;
+                        if (dbContext.SaveChanges() > 0)
+                        {
+                            row++;
+                        }
+                    }
+
+                }
+            if (row > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         //public Subcategory GetByID(long subcategoryID)

@@ -136,5 +136,26 @@ namespace GUM.WebApi.Controllers
                 return this.Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [HttpGet]
+        [Route("api/Product/GetStocks")]
+        public HttpResponseMessage GetStocks([FromUri] int id)
+        {
+            var stocks = mgr.GetStocks(id);
+            if (stocks != null)
+                return Request.CreateResponse(HttpStatusCode.OK, stocks);
+            else
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+        }
+
+        [HttpPost]
+        [Route("api/Product/PostManageStock/")]
+        public HttpResponseMessage PostManageStock(Product product)
+        {
+
+                mgr.UpdateStock(product);
+                return this.Request.CreateResponse(HttpStatusCode.OK);
+
+        }
     }
 }

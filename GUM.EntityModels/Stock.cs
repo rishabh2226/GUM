@@ -11,5 +11,7 @@ namespace GUM.ViewModels
         public long ProductID { get; set; }
         public long SizeID { get; set; }
         public int Quantity { get; set; }
+        public bool Selected { get; set; }
+        public int StockID { get; set; }
     }
 }
