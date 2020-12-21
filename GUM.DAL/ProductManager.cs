@@ -200,9 +200,22 @@ namespace GUM.DAL
             return stocks;
         }
 
-        public void Update(VM.Product product)
+        public bool Update(VM.Product product)
         {
-            throw new NotImplementedException();
+            var pro = (from c in dbContext.Products
+                        where c.ProductID == product.ProductID
+                        select c).FirstOrDefault();
+            if (pro != null)
+            {
+                pro.ProductName = product.ProductName;
+                pro.Color = product.Color;
+                pro.UnitPrice = product.UnitPrice;
+                pro.ProductDescription = product.ProductDescription;
+                pro.DiscountPercentage = product.DiscountPercentage;
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool UpdateStock(VM.Product product)
@@ -213,19 +226,7 @@ namespace GUM.DAL
             var stockIDs = dbStocks.Select(x=>x.StockID).ToArray();
             var stkIDs = product.Stocks.Select(x => x.StockID).ToArray();
 
-            foreach (var st in stockIDs)
-                {
-                    if (!stkIDs.Contains(st))
-                    {
-                        var d = dbContext.Stocks.Find(st);
-                        dbContext.Stocks.Remove(d);
-                        //dbContext.Entry(d).State = EntityState.Deleted;
-                        if (dbContext.SaveChanges() > 0)
-                        {
-                            row++;
-                        }
-                    }
-                }
+
             foreach (var s in product.Stocks)
                 {
 
@@ -233,6 +234,7 @@ namespace GUM.DAL
                     {
                         var stk = dbContext.Stocks.Find(s.StockID);
                         stk.Quantity = s.Quantity;
+                        stk.SizeID = s.SizeID;
                         if (dbContext.SaveChanges() > 0)
                         {
                             row++;
@@ -264,6 +266,19 @@ namespace GUM.DAL
                     }
 
                 }
+            foreach (var st in stockIDs)
+            {
+                if (!stkIDs.Contains(st))
+                {
+                    var d = dbContext.Stocks.Find(st);
+                    dbContext.Stocks.Remove(d);
+                    //dbContext.Entry(d).State = EntityState.Deleted;
+                    if (dbContext.SaveChanges() > 0)
+                    {
+                        row++;
+                    }
+                }
+            }
             if (row > 0)
             {
                 return true;

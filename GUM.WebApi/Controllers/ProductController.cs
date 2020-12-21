@@ -157,5 +157,22 @@ namespace GUM.WebApi.Controllers
                 return this.Request.CreateResponse(HttpStatusCode.OK);
 
         }
+
+        [HttpPost]
+        [Route("api/Product/PostUpdateDetails/")]
+        public HttpResponseMessage PostUpdateDetails(Product product)
+            {
+
+            if (mgr.Update(product))
+            {
+                var products = mgr.GetAll();
+                return this.Request.CreateResponse(HttpStatusCode.OK,products);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+
+        }
     }
 }
