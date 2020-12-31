@@ -78,7 +78,7 @@ namespace GUM.WebApi.Controllers
             var productImages=mgr.GetImagesUsingProductID(id);           
             for (var i = 0; i < productImages.Count; i++)
             {
-                productImages[i].Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(productImages[i].Image)));
+                productImages[i].Image =  "/Content/images/" + productImages[i].Image;
             }
             if (productImages != null)
                 return Request.CreateResponse(HttpStatusCode.OK, productImages);
@@ -102,7 +102,7 @@ namespace GUM.WebApi.Controllers
                 var productImages = mgr.GetImagesUsingProductID(product.ProductID);
                 for (var i = 0; i < productImages.Count; i++)
                 {
-                    productImages[i].Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(productImages[i].Image)));
+                    productImages[i].Image = "/Content/images/" + productImages[i].Image;
                 }
                 return this.Request.CreateResponse(HttpStatusCode.OK,productImages);
             }
@@ -127,7 +127,7 @@ namespace GUM.WebApi.Controllers
                 var productImages = mgr.GetImagesUsingProductID(productImage.ProductID);
                 for (var i = 0; i < productImages.Count; i++)
                 {
-                    productImages[i].Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(productImages[i].Image)));
+                    productImages[i].Image = "/Content/images/" + productImages[i].Image;
                 }
                 return this.Request.CreateResponse(HttpStatusCode.OK, productImages);
             }

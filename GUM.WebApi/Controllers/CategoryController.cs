@@ -22,7 +22,7 @@ namespace GUM.WebApi.Controllers
         public HttpResponseMessage Get()
         {
             var categories=mgr.GetAll();
-            categories.ForEach(x => { x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image))); });
+            categories.ForEach(x => { x.Image = "/Content/images/" + x.Image; });
             if (categories != null)
                 return this.Request.CreateResponse(HttpStatusCode.OK, categories);
             else
@@ -45,8 +45,9 @@ namespace GUM.WebApi.Controllers
                 mgr.Add(category);
                 var categories = mgr.GetAll();
                 categories.ForEach(x => 
-                { 
-                    x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image))); 
+                {
+                    //x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image)));
+                    x.Image = "/Content/images/" + x.Image;
                 });
                 return this.Request.CreateResponse(HttpStatusCode.OK,categories);
             }
@@ -75,7 +76,7 @@ namespace GUM.WebApi.Controllers
             }
             
             var categories = mgr.GetAll();
-            categories.ForEach(x => { x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image))); });
+            categories.ForEach(x => { x.Image = "/Content/images/" + x.Image; });
             return this.Request.CreateResponse(HttpStatusCode.OK,categories);
         }
 
@@ -88,7 +89,7 @@ namespace GUM.WebApi.Controllers
             if (mgr.Delete(id)) 
             {
                 var categories = mgr.GetAll();
-                categories.ForEach(x => { x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image))); });
+                categories.ForEach(x => { x.Image = "/Content/images/" + x.Image; });
                 return this.Request.CreateResponse(HttpStatusCode.OK,categories);
             }
             else

@@ -21,5 +21,6 @@ namespace GUM.Interfaces
 
         List<Stock> GetStocks(long productID);
         bool UpdateStock(Product stocks);
+        List<Product> getProducts(int categoryID,int subcategoryID);
     }
 }

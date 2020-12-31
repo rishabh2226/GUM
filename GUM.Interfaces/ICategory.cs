@@ -9,11 +9,11 @@ namespace GUM.Interfaces
 {
     public interface ICategory
     {
-        void Add(Category category);
-        List<Category> GetAll();
-        Category GetByID(long categoryID);
-        bool Delete(int categoryID);
-        void Update(ViewModels.Category category);
+            void Add(Category category);
+            List<Category> GetAll();
+            Category GetByID(long categoryID);
+            bool Delete(int categoryID);
+            void Update(ViewModels.Category category);
 
     }
 }

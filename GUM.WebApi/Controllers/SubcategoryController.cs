@@ -22,7 +22,7 @@ namespace GUM.WebApi.Controllers
         public HttpResponseMessage Get()
         {
             var subcategories = mgr.GetAll();
-            subcategories.ForEach(x => { x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image))); });
+            subcategories.ForEach(x => { x.Image = "/Content/images/" + x.Image; });
             if (subcategories != null)
                 return this.Request.CreateResponse(HttpStatusCode.OK, subcategories);
             else
@@ -46,7 +46,7 @@ namespace GUM.WebApi.Controllers
                 var subcategories = mgr.GetAll();
                 subcategories.ForEach(x =>
                 {
-                    x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image)));
+                    x.Image = "/Content/images/" + x.Image;
                 });
                 return this.Request.CreateResponse(HttpStatusCode.OK, subcategories);
             }
@@ -76,7 +76,7 @@ namespace GUM.WebApi.Controllers
             }
 
             var subcategories = mgr.GetAll();
-            subcategories.ForEach(x => { x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image))); });
+            subcategories.ForEach(x => { x.Image = "/Content/images/" + x.Image; });
             return this.Request.CreateResponse(HttpStatusCode.OK, subcategories);
         }
 
@@ -89,7 +89,7 @@ namespace GUM.WebApi.Controllers
             if (mgr.Delete(id))
             {
                 var subcategories = mgr.GetAll();
-                subcategories.ForEach(x => { x.Image = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(File.ReadAllBytes(x.Image))); });
+                subcategories.ForEach(x => { x.Image = "/Content/images/" + x.Image; });
                 return this.Request.CreateResponse(HttpStatusCode.OK, subcategories);
             }
             else

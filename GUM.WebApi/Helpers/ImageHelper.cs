@@ -28,16 +28,18 @@ namespace GUM.WebApi.Helpers
             var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/images"), fileName);
             //saving image 
             File.WriteAllBytes(path, blob);
-            return path;
+            //return path;
+            return fileName;
         }
         #endregion
 
         #region DeleteImage
-        public static bool DeleteImage(string imgPath)
-        {           
-            if (File.Exists(imgPath))
+        public static bool DeleteImage(string filename)
+        {
+            var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/images"), filename);
+            if (File.Exists(path))
             {
-                File.Delete(imgPath);
+                File.Delete(path);
                 return true;
             }
             else
